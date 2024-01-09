@@ -16,18 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Eye, Mail, User, EyeOff } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import Loader from "@/components/Loader";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 
 const formSchema = z.object({
-  userName: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters long",
-    })
-    .max(50),
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
@@ -37,13 +27,8 @@ const formSchema = z.object({
     .max(50),
 });
 
-export default function SignUp() {
+export default function Login() {
   const [showPassword, setShowPassword] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const router = useRouter();
-
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -51,42 +36,22 @@ export default function SignUp() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userName: "",
       email: "",
       password: "",
     },
   });
 
-  const handleFormSubmit = async (
-    values: z.infer<typeof formSchema>,
-    e: any
-  ) => {
-    setIsLoading(true);
-    e.preventDefault();
+  const handleFormSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log("clicked");
     console.log(values);
-
-    try {
-      const res = await axios.post("/api/signup", values);
-
-      if (res.status === 200 || res.status === 201) {
-        console.log("sign up seccessfully");
-        router.push("/login");
-        toast.success("Sign up seccessfully");
-      }
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error.response?.data?.error || "An error occurred");
-    } finally {
-      setIsLoading(false);
-      form.reset();
-    }
+    form.reset();
   };
 
   return (
-    <main className="bg-white sm:h-[35rem] sm:w-[30rem] rounded-xl h-[37rem] w-[18rem] px-[2rem] sm:py-[2rem] py-[4rem] sm:px-[3rem] flex flex-col items-center justify-center">
+    <main className="bg-white sm:h-[30rem] sm:w-[30rem] rounded-xl h-[30rem] w-[20rem] px-[2rem] sm:py-[2rem] py-[4rem] sm:px-[3rem] flex flex-col items-center justify-center">
       <h1 className="font-bold text-center sm:mb-[3rem] sm:text-3xl text-xl mb-[2rem]">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">
-          Sign up
+          Log in
         </span>
       </h1>
 
@@ -97,31 +62,6 @@ export default function SignUp() {
           autoComplete="off"
           method="POST"
         >
-          <FormField
-            control={form.control}
-            name="userName"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel htmlFor="userName" className="text-gray-800">
-                  Username :
-                </FormLabel>
-                <FormControl>
-                  <div className="relative flex items-center">
-                    <Input
-                      placeholder="John Doe"
-                      {...field}
-                      className="pr-10"
-                      id="userName"
-                      type="text"
-                    />
-                    <User className="absolute top-1/2 right-2 transform -translate-y-1/2 text-muted-foreground" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="email"
@@ -186,7 +126,7 @@ export default function SignUp() {
             className="w-full rounded-lg text-white bg-blue-500 hover:bg-blue-600"
             type="submit"
           >
-            {isLoading ? <Loader /> : "Sign up"}
+            Sign up
           </Button>
         </form>
       </Form>
@@ -194,12 +134,12 @@ export default function SignUp() {
         className="flex sm:items-center sm:justify-center sm:flex-row flex-col
        mt-4 text-center sm:gap-1"
       >
-        <p>Already have an accout?</p>
+        <p>You do not have an account?</p>
         <Link
           className="text-blue-500 hover:text-blue-600 font-semibold"
-          href="/login"
+          href="/"
         >
-          Log in
+          sign up
         </Link>
       </div>
     </main>
