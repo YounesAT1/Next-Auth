@@ -68,12 +68,12 @@ A full-stack web application built using Next.js and MongoDB, allowing users to 
 6.  Access the application in your browser at `http://localhost:3000`.
 
 ## Usage
-- **Register: Access the sign-up page, create an account, and receive a success notification.
-- **Login: Use valid credentials to log in, redirect to the dashboard, and receive a success      notification.
-- **Invalid Input: See error messages for incorrect form inputs.
-- **Invalid Login: Users attempting to log in with wrong credentials will receive an error 
+- **Register**: Access the sign-up page, create an account, and receive a success notification.
+- **Login**: Use valid credentials to log in, redirect to the dashboard, and receive a success      notification.
+- **Invalid Input**: See error messages for incorrect form inputs.
+- **Invalid Login**: Users attempting to log in with the wrong credentials will receive an error 
   notification.
-- **Dashboard Access: Access to the dashboard is restricted unless logged in.
+- **Dashboard Access**: Access to the dashboard is restricted unless logged in.
 
 ## Contributing
 
