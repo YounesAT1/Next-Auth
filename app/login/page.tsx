@@ -13,9 +13,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Eye, Mail, User, EyeOff } from "lucide-react";
+import { Eye, Mail, EyeOff } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -29,6 +33,10 @@ const formSchema = z.object({
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -41,10 +49,38 @@ export default function Login() {
     },
   });
 
-  const handleFormSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("clicked");
-    console.log(values);
-    form.reset();
+  const handleFormSubmit = async (
+    values: z.infer<typeof formSchema>,
+    e: any
+  ) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(values.email)) {
+      toast.error("Invalid email address");
+    }
+
+    try {
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        toast.error("Incorrect credentials !!");
+      } else {
+        router.push("/dashboard");
+        toast.success("Log in successfully");
+      }
+    } catch (error) {
+      toast.error("Incorrect credentials !!");
+    } finally {
+      setIsLoading(false);
+      form.reset();
+    }
   };
 
   return (
@@ -126,7 +162,7 @@ export default function Login() {
             className="w-full rounded-lg text-white bg-blue-500 hover:bg-blue-600"
             type="submit"
           >
-            Sign up
+            {isLoading ? <Loader /> : "Sign in"}
           </Button>
         </form>
       </Form>
@@ -139,7 +175,7 @@ export default function Login() {
           className="text-blue-500 hover:text-blue-600 font-semibold"
           href="/"
         >
-          sign up
+          Log in
         </Link>
       </div>
     </main>

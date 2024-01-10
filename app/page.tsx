@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
-  userName: z
+  name: z
     .string()
     .min(2, {
       message: "Username must be at least 2 characters long",
@@ -40,7 +40,6 @@ const formSchema = z.object({
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const router = useRouter();
 
@@ -51,7 +50,7 @@ export default function SignUp() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userName: "",
+      name: "",
       email: "",
       password: "",
     },
@@ -63,7 +62,12 @@ export default function SignUp() {
   ) => {
     setIsLoading(true);
     e.preventDefault();
-    console.log(values);
+
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(values.email)) {
+      toast.error("Invalid email address");
+    }
 
     try {
       const res = await axios.post("/api/signup", values);
@@ -99,10 +103,10 @@ export default function SignUp() {
         >
           <FormField
             control={form.control}
-            name="userName"
+            name="name"
             render={({ field }) => (
               <FormItem className="mb-4">
-                <FormLabel htmlFor="userName" className="text-gray-800">
+                <FormLabel htmlFor="name" className="text-gray-800">
                   Username :
                 </FormLabel>
                 <FormControl>
@@ -111,7 +115,7 @@ export default function SignUp() {
                       placeholder="John Doe"
                       {...field}
                       className="pr-10"
-                      id="userName"
+                      id="name"
                       type="text"
                     />
                     <User className="absolute top-1/2 right-2 transform -translate-y-1/2 text-muted-foreground" />
