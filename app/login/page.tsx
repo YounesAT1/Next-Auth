@@ -162,7 +162,7 @@ export default function Login() {
             className="w-full rounded-lg text-white bg-blue-500 hover:bg-blue-600"
             type="submit"
           >
-            {isLoading ? <Loader /> : "Sign in"}
+            {isLoading ? <Loader /> : "Log in"}
           </Button>
         </form>
       </Form>
@@ -175,7 +175,7 @@ export default function Login() {
           className="text-blue-500 hover:text-blue-600 font-semibold"
           href="/"
         >
-          Log in
+          Sign up
         </Link>
       </div>
     </main>
