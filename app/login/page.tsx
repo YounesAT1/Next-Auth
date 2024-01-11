@@ -70,13 +70,13 @@ export default function Login() {
       });
 
       if (res?.error) {
-        toast.error("Incorrect credentials !!");
+        toast.error("Credentials do not match !!");
       } else {
         router.push("/dashboard");
         toast.success("Log in successfully");
       }
     } catch (error) {
-      toast.error("Incorrect credentials !!");
+      toast.error("Something went wrong !!");
     } finally {
       setIsLoading(false);
       form.reset();
@@ -85,7 +85,7 @@ export default function Login() {
 
   return (
     <main className="bg-white sm:h-[30rem] sm:w-[30rem] rounded-xl h-[30rem] w-[20rem] px-[2rem] sm:py-[2rem] py-[4rem] sm:px-[3rem] flex flex-col items-center justify-center">
-      <h1 className="font-bold text-center sm:mb-[3rem] sm:text-3xl text-xl mb-[2rem]">
+      <h1 className="font-bold text-center sm:mb-[3rem] sm:text-3xl text-xl mb-[1rem]">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">
           Log in
         </span>

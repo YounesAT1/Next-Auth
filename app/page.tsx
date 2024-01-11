@@ -88,12 +88,11 @@ export default function SignUp() {
 
   return (
     <main className="bg-white sm:h-[35rem] sm:w-[30rem] rounded-xl h-[37rem] w-[18rem] px-[2rem] sm:py-[2rem] py-[4rem] sm:px-[3rem] flex flex-col items-center justify-center">
-      <h1 className="font-bold text-center sm:mb-[3rem] sm:text-3xl text-xl mb-[2rem]">
+      <h1 className="font-bold text-center sm:mb-[2rem] sm:text-3xl text-xl mb-[1rem]">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">
           Sign up
         </span>
       </h1>
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
@@ -194,6 +193,7 @@ export default function SignUp() {
           </Button>
         </form>
       </Form>
+
       <div
         className="flex sm:items-center sm:justify-center sm:flex-row flex-col
        mt-4 text-center sm:gap-1"

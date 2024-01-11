@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     if (foundUser) {
       return NextResponse.json(
-        { error: "User Already exists" },
+        { error: "Email Already exists" },
         { status: 400 }
       );
     }
