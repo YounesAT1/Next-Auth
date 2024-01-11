@@ -41,11 +41,11 @@ A full-stack web application built using Next.js and MongoDB, allowing users to 
 
 1. Clone the repository.
     ```bash
-   git clone https://github.com/yourusername/project-name.git
+   git clone https://github.com/YounesAT1/Next-Auth.git
     ```
 2. Navigate to the project directory.
     ```bash
-   cd project-name
+   cd Next-Auth
     ```
 3. Install dependencies.
    ```bash
